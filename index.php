@@ -36,7 +36,7 @@
                 <p class="text-center">
                 Davao city's first online sari-sari store
                 </p>
-                <a href="/month_1/ourProducts.php" class="btn btn-md">GET STARTED</a>
+                <a href="/ourProducts.php" class="btn btn-md">GET STARTED</a>
             </div>
         </div>
     </div>

@@ -1,7 +1,9 @@
 <?php
+include 'main.php';
 include 'products.php';
 
-function url(){
+function url()
+{
     return sprintf(
         "%s://%s%s",
         isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
@@ -16,6 +18,7 @@ function url(){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,12 +29,15 @@ function url(){
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <style>
-        #header1{
+        #header1 {
             text-decoration: underline;
         }
-        
+        .btn-sm{
+            margin: 0 5px 
+        }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <a href="/month_1/" class="navbar-brand">Twinkle</a>
@@ -41,13 +47,13 @@ function url(){
         <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                     <a class="nav-link" href="#">PRODUCTS</a>
+                    <a class="nav-link" href="#">PRODUCTS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">ABOUT</a>
                 </li>
                 <li class="nav-item">
-                     <a class="nav-link" href="#">CONTACT</a>
+                    <a class="nav-link" href="#">CONTACT</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -58,10 +64,21 @@ function url(){
     <div class="container">
         <div class="clearfix" style="height: 20px;"></div>
         <div class="page-header">
-            <h1>Product Listings</h1>
+            <h2 class="heads">Product Listings</h3>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 offset-md-9 text-right">
+                <a href="/addProduct.php" class="btn btn-success">Add Product</a>
+            </div>
         </div>
         <div class="clearfix" style="height: 20px;"></div>
-        
+        <?php
+        if (isset($_SESSION['success'])) {
+            echo '<div class="alert alert-success" role="alert">' . $_SESSION['success'] . '</div>';
+        }
+        ?>
+        <?php unset($_SESSION['success']) ?>
+        <div class="clearfix" style="height: 20px;"></div>
         <table class="table table-striped">
             <thead class="thead-dark">
                 <th class="text-center">#</th>
@@ -72,18 +89,20 @@ function url(){
             </thead>
             <tbody>
                 <?php
-                    $string = '';
-                    foreach($products as $k => $v){
-                        $string .= '<tr>';
-                        $string .= '<td class="text-center">'.$v['id'].'</td>';
-                        $string .= '<td class="text-center"><a href="'.basename(__FILE__).'/../product_details.php?id='.$v['id'].'">'.$v['product_name'].'</a></td>';
-                        $string .= '<td class="text-center">'.$v['quantity'].'</td>';
-                        $string .= '<td class="text-center">$'.$v['price'].'</td>';
-                        // $string .= '<td class="text-center"><a href="/product_details.php?id='.$v['id'].'" class="btn btn-primary btn-sm"><i class="fa fa-eye" style="color: #fff"></i></a></td>';
-                        $string .= '<td class="text-center"><a href="'.basename(__FILE__).'/../product_details.php?id='.$v['id'].'" class="btn btn-primary btn-sm"><i class="fa fa-eye" style="color: #fff"></i></a></td>';
-                        $string .= '</tr>';
-                    }
-                    echo $string;
+                $string = '';
+                foreach ($products as $k => $v) {
+                    $string .= '<tr>';
+                    $string .= '<td class="text-center">' . $v['id'] . '</td>';
+                    $string .= '<td class="text-center"><a href="' . basename(__FILE__) . '/../product_details.php?id=' . $v['id'] . '">' . $v['product_name'] . '</a></td>';
+                    $string .= '<td class="text-center">' . $v['quantity'] . '</td>';
+                    $string .= '<td class="text-center">$' . number_format($v['price'], 2) . '</td>';
+                    // $string .= '<td class="text-center"><a href="/product_details.php?id='.$v['id'].'" class="btn btn-primary btn-sm"><i class="fa fa-eye" style="color: #fff"></i></a></td>';
+                    $string .= '<td class="text-center"><a title="Edit" href="' . basename(__FILE__) . '/../editProduct.php?get_id=' . $v['id'] . '" class="btn btn-primary btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+                    $string .= '<a title="Delete" href="' . basename(__FILE__) . '/../deleteProduct.php?get_id=' . $v['id'] . '" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+                    $string .= '</td>';
+                    $string .= '</tr>';
+                }
+                echo $string;
                 ?>
                 <!-- <tr>
                     <td class="text-center">1</td>
@@ -110,7 +129,13 @@ function url(){
         </table>
     </div>
 </body>
+
 </html>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<?php
+session_destroy();
+?>

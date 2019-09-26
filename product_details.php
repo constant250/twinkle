@@ -1,12 +1,13 @@
 <?php
+include 'main.php';
 include 'products.php';
 $detail = null;
-foreach($products as $k => $v){
-    if($_GET['id'] == $v['id']){
+foreach ($products as $k => $v) {
+    if ($_GET['id'] == $v['id']) {
         $detail = $v;
     }
 }
-if($detail == null){
+if ($detail == null) {
     echo "No product details avalable...";
     exit();
 }
@@ -14,6 +15,7 @@ if($detail == null){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,22 +26,28 @@ if($detail == null){
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <style>
-        #header1{
+        #header1 {
             text-decoration: underline;
         }
-        
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a href="#" class="navbar-brand">My Products</a>
+        <a href="#" class="navbar-brand">Twinkle</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Logout</a>
+                    <a class="nav-link" href="#">PRODUCTS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">CONTACT</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -50,13 +58,13 @@ if($detail == null){
     <div class="container">
         <div class="clearfix" style="height: 20px;"></div>
         <div class="page-header">
-            <a href="<?php echo basename(__FILE__).'/../ourProducts.php' ?>" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Go Back</a>
+            <a href="<?php echo basename(__FILE__) . '/../ourProducts.php' ?>" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Go Back</a>
         </div>
         <div class="clearfix" style="height: 20px;"></div>
         <div class="row">
             <!-- <div class="col-md-3"></div> -->
             <div class="col-md-6">
-                <img src="<?php echo basename(__FILE__).'/../img/'.$detail['img'] ?>" class="img-fluid img-thumbnail" alt="">
+                <img src="<?php echo basename(__FILE__) . '/../img/' . $detail['img'] ?>" class="img-fluid img-thumbnail" alt="">
             </div>
             <div class="col-md-6">
                 <div class="row details">
@@ -70,16 +78,17 @@ if($detail == null){
                     <div class="col-md-9 width"><?php echo $detail['quantity'] ?></div>
                     <div class="clearfix"></div>
                     <div class="col-md-3 width"><b>Price:</b></div>
-                    <div class="col-md-9 width"><?php echo $detail['price'] ?></div>
+                    <div class="col-md-9 width">$ <?php echo number_format($detail['price'], 2); ?></div>
                     <div class="clearfix"></div>
                     <div class="col-md-3 width"><b>Description:</b></div>
-                    <div class="col-md-12 width">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</div>
+                    <div class="col-md-12 width"><?php echo stripcslashes ($detail['description']) ?></div>
                 </div>
             </div>
         </div>
-        
+
     </div>
 </body>
+
 </html>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
